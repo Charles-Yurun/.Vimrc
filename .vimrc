@@ -13,10 +13,6 @@ if 'VIRTUAL_ENV' in os.environ:
 EOF
 endif
 
-"python << EOF
-"print(sys.path)
-"EOF
-
 execute pathogen#infect()
 
 if has("syntax")
@@ -31,6 +27,18 @@ set softtabstop=4
 set shiftwidth=4
 set autoindent
 set cindent
+set encoding=utf-8
+
+"Enable folding
+set foldenable
+set foldmethod=indent
+set foldlevel=99
+
+set nobackup "不备份
+set noswapfile "关闭交换软件
+set nowritebackup "不写入备份软件
+set ruler "显示标尺
+
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -46,7 +54,6 @@ Bundle 'powerline/fonts'
 Bundle 'flazz/vim-colorschemes'
 Bundle 'kien/ctrlp.vim'
 Bundle 'davidhalter/jedi-vim'
-"Bundle 'python-rope/ropevim'
 Bundle 'terryma/vim-multiple-cursors'
 Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/neosnippet'
@@ -55,6 +62,7 @@ Bundle 'jiangmiao/auto-pairs'
 Bundle 'Yggdroot/indentLine'
 Bundle 'tpope/vim-fugitive'
 "The bundles you install will be listed here
+
 
 filetype plugin indent on
 
@@ -93,14 +101,13 @@ execute pathogen#infect()
 
 "jedi setting
 
-let g:jedi#usages_command = "<leader>z"
-let g:jedi#documentation_command = "<leader>k"
+let g:jedi#goto_command = "<leader>d"
 let g:jedi#goto_assignments_command = "<leader>g"
-let g:jedigoto_definitions_command =""
-let g:jedi#popup_on_dot = 0
-let g:jedi#popup_select_first = 0
-let g:jedi#completions_command="<C-Space>"
-let g:jedi#auto_close_doc = 1
+let g:jedi#goto_definitions_command = ""
+let g:jedi#documentation_command = "K"
+let g:jedi#usages_command = "<leader>n"
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#rename_command = "<leader>r"
 
 "Python-repo setting
 
@@ -144,10 +151,11 @@ autocm FileType python setlocal omnifunc=pythoncomplete#Complete
 let g:indentLine_color_term = 239
 let g:indentLine_enabled = 1
 
+
 map <F2> :NERDTreeToggle<CR>
 
 map <F4> :call AddAuther()<CR>
-
+autocmd BufNewFile *.py :call AddAuther()
 function AddAuther()
 	let n = 1
 	while n < 11
