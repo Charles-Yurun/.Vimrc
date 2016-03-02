@@ -1,5 +1,7 @@
 set nocompatible
 filetype off
+filetype plugin on
+
 
 
 if has('python')
@@ -9,7 +11,9 @@ import sys
 import vim
 if 'VIRTUAL_ENV' in os.environ:
 	project_base_dir = os.environ['VIRTUAL_ENV']
-	sys.path.insert(0,os.path.join(project_base_dir,'lib','python3.4','site-packages'))
+	sys.path.insert(0,project_base_dir)
+	activate_this = os.path.join(project_base_dir,'bin/activate_this.py')
+	execfile(activate_this,dict(__file__=activate_this))
 EOF
 endif
 
@@ -48,16 +52,22 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 Bundle 'bling/vim-airline'
+Bundle 'Valloric/YouCompleteMe'
 Bundle 'Lokaltog/powerline',{'rtp': 'powerline/bindings/vim/'}
 Bundle 'scrooloose/nerdtree'
 Bundle 'powerline/fonts'
-Bundle 'flazz/vim-colorschemes'
-Bundle 'kien/ctrlp.vim'
 Bundle 'davidhalter/jedi-vim'
+Bundle 'flazz/vim-colorschemes'
+Bundle 'Glench/Vim-Jinja2-Syntax'
+Bundle 'kien/ctrlp.vim'
+Bundle 'kien/rope-vim'
+Bundle 'nvie/vim-flake8'
+Bundle 'vim-scripts/pylint.vim'
 Bundle 'terryma/vim-multiple-cursors'
-Bundle 'Shougo/neocomplcache'
-Bundle 'Shougo/neosnippet'
-Bundle 'kevinw/pyflakes-vim'
+"Bundle 'Shougo/neocomplcache'
+"Bundle 'Shougo/neosnippet'
+Bundle 'vimwiki/vimwiki'
+"Bundle 'kevinw/pyflakes-vim'
 Bundle 'jiangmiao/auto-pairs'
 Bundle 'Yggdroot/indentLine'
 Bundle 'tpope/vim-fugitive'
@@ -150,6 +160,8 @@ autocm FileType python setlocal omnifunc=pythoncomplete#Complete
 
 let g:indentLine_color_term = 239
 let g:indentLine_enabled = 1
+
+let g:ycm_python_binary_path = '/usr/bin/python2'
 
 
 map <F2> :NERDTreeToggle<CR>
